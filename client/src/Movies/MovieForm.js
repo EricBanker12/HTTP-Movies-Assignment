@@ -29,30 +29,16 @@ function MovieForm(props) {
 
     function submitHandler(e) {
         e.preventDefault()
-        if (id) {
-            axios.put(`http://localhost:5000/api/movies/${id}`, {
-                ...input,
-                metascore: Number(input.metascore),
-                stars: input.stars.split(',').map(str => str.trim())
-            })
-            .then(resp => {
-                // console.log(resp)
-                props.history.push('/')
-            })
-            .catch(err => console.log(err.response))
-        }
-        else {
-            axios.post(`http://localhost:5000/api/movies`, {
-                ...input,
-                metascore: Number(input.metascore),
-                stars: input.stars.split(',').map(str => str.trim())
-            })
-            .then(resp => {
-                // console.log(resp)
-                props.history.push('/')
-            })
-            .catch(err => console.log(err.response))
-        }
+        axios[id?'put':'post'](`http://localhost:5000/api/movies${id?'/'+id:''}`, {
+            ...input,
+            metascore: Number(input.metascore),
+            stars: input.stars.split(',').map(str => str.trim())
+        })
+        .then(resp => {
+            // console.log(resp)
+            props.history.push('/')
+        })
+        .catch(err => console.log(err.response))
     }
 
     return (
