@@ -41,11 +41,23 @@ function MovieForm(props) {
             })
             .catch(err => console.log(err.response))
         }
+        else {
+            axios.post(`http://localhost:5000/api/movies`, {
+                ...input,
+                metascore: Number(input.metascore),
+                stars: input.stars.split(',').map(str => str.trim())
+            })
+            .then(resp => {
+                // console.log(resp)
+                props.history.push('/')
+            })
+            .catch(err => console.log(err.response))
+        }
     }
 
     return (
         <form className="movie-card" onSubmit={submitHandler}>
-            <h4>Edit a Movie</h4>
+            <h4>{id?'Edit':'Add'} a Movie</h4>
             <label style={{display: 'block', margin: '1rem 0'}}>
                 Title:&nbsp;
                 <input
@@ -94,7 +106,7 @@ function MovieForm(props) {
                     onChange={inputHandler}
                 />
             </label>
-            <button className='home-button'>Submit</button>
+            <button className='home-button'>{id?'Edit':'Add'} Movie</button>
         </form>
     )
 }

@@ -16,6 +16,7 @@ const App = () => {
     <>
       <SavedList list={savedList} />
       <Route exact path="/" component={MovieList} />
+      <Route exact path="/add-movie" component={MovieForm} />
       <Route
         path="/movies/:id"
         render={props => {
